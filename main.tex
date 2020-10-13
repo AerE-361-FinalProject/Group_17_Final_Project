@@ -18,18 +18,6 @@
 \usepackage{xcolor} % for setting colors
 \input{arduinoLanguage.tex}  
 
-%\makeatletter
-%\let\thetitle\@title
-
-%\let\thedate\@date
-%\makeatother
-
-%\pagestyle{fancy}
-%\fancyhf{}
-%\rhead{\theauthor}
-%\lhead{\thetitle}
-%\cfoot{\thepage}
-
 \begin{document}
 \title{Project Proposal}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -43,21 +31,19 @@
     \textsc{\large Computational Techniques for Aerospace Design}\\[0.2 cm]
 	\textsc{\Large AERE 361}\\[0.5 cm]				% Course Code
 	\textsc{\Large Project Proposal}\\[0.2 cm]
-	\textsc{\Large TEAM NAME HERE}\\[0.2 cm]
+	\textsc{\Large $\#include <EpicTeamName.h>$}\\[0.2 cm]
 	\rule{\linewidth}{0.2 mm} \\[0.4 cm]
-	%{ \huge \bfseries \thetitle}\\
 	
 	
 	\begin{minipage}{0.8\textwidth}
 		
 			\begin{flushleft} 
 			\emph{Team Member Names :} \\
-			Last Name, First Name\linebreak
-			Last Name, First Name\linebreak
-			Last Name, First Name\linebreak
-			Last Name, First Name\linebreak
-			Last Name, First Name\linebreak
-			Last Name, First Name\linebreak
+			Hingst, Charles\linebreak
+			Gill, Jarod\linebreak
+			Poppinga, Ashley\linebreak
+			Swayne, Logan\linebreak
+			
 			
 		\end{flushleft}
 	\end{minipage}\\[2 cm]
@@ -73,39 +59,61 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{ABSTRACT}
-This is your abstract.  It is a short summary of what your proposal will cover.  You should keep your abstract to 250 words or less.  Use this to ``hook in'' your reader.
+This project proposal will introduce the various features, functions, and general design of the project. The introduction section will briefly summarize the purpose of the project, and how the project will operate. The features section will cover the multiple functions, including inputs and outputs, that the project will have in order to achieve its purpose.
+In the problem statement section, the problem addressed by this project will be defined, and also the importance behind the issue. The problem solution portion will give the project's approach to the problem statement, specifically pseudo code that outlines the logical process the project will follow. Finally, the conclusion will tie up this project proposal and leave any further remarks.
 
 \section{INTRODUCTION}
-Introduce your project.  Brief summary of what you are proposing that it does and why.  Should be 1-2 paragraphs.
+This project will be utilizing an Adafruit Circuit Playground Express to create an interactive memory skill game, similar to the "Simon" game released in 1978 \cite{Edwards}. This game will provide a randomized sequence of inputs, introducing them one by one, in a designated order. The player will then have to repeat the growing sequence repeatedly until the victory condition is met, which will be a set sequence length. This game will be a fun way to exercise one's memory and reaction time, and perhaps help those who want to improve their short term memory.   
 
 \section{FEATURES}
-List here all the features that you propose your device has.  You should have at least 3 key features.  More can be added if needed.
+Our device will feature use of four external, tactile buttons as well as the on-board lights, buttons, and speaker. The four external buttons will be used to collect the user's input, the lights will be used to indicate that the user's input has been collected as well as signal victory or defeat, the two on-board buttons will be used to start the game, and the speaker will give feedback to indicate victory or defeat.
 
+\begin{center}
+\begin{tabular}{|c|c|}
+    \hline
+    Feature & Use \\
+    \hline
+    \hline
+    4 External Buttons & Device/User Interaction\\
+    2 On-board Buttons & Game Start\\
+    On-board LED Lights & Device/User Interaction\\
+    On-board Speaker & Victory/Defeat Indication\\
+    \hline
+\end{tabular}
+\end{center}
 
-% Below is an example of inserting an image.  Not that LaTex
-% will determine the best location for the image.  Make sure
-% you replace this image with yours and place a proper caption.
-% You can use the \label{name} to name the figure and then reference
-% it from your writeup and LaTeX will autmatically give it the correct
-% number. 
-\begin{figure}[!t]
-\centering
-\includegraphics[width=4.5in]{cpx01.jpg}
-\caption{This is the circuit playground express}
-\label{fig:cpx}
-\end{figure}
 
 \section{PROBLEM STATEMENT}
-Here you will go into more detail on what problem you hope to solve or address.  You should discuss what the problem is and why it is important to solve it.
-
-You will need to cite at least one source for backing up what you are trying to do or solve with your project.  I would suggest looking at Adafruit (which you can cite).  Of course you can also search for and cite any other publication.  I would recommend either using the ISU library or you can use Google Scholar.  You will need to add to the ref.bib file found in this template.  Once you do that, cite them like this \cite{einstein} or this \cite{dirac}.
+The COVID-19 pandemic has forced many into isolation with little to do. A study featured in the European Journal of Psychotraumatology concluded that boredom during the pandemic has contributed to the development of conditions such as depression, anxiety, and stress in respondents \cite{Chao}. This study also found that these conditions caused participants to question the meaning of life \cite{Chao}. 
 
 \section{PROBLEM SOLUTION}
-Here go over on your approach to your solution.  You must include at least one image that shows your concept.  This can be a sketch or drawing or some pictures that shows your concept.  Make sure you reference the image(s) like this - Figure \ref{fig:cpx}.  Finally, make sure you replace the stock image we included.  
 
-You can also include any pseudo code or any code snippets you have gathered so far.  If you want to embed code into \LaTeX, you can use the example below on how to do this in \LaTeX.
+Our team proposes to alleviate the issues described in the problem statement through designing a pocket-sized game to play any time boredom strikes. The game will utilize a Circuit Playground Express arduino to create a one-player "Simon Says" interface. The functionality of the interface and walk through of the gameplay are described in the following subsections.
 
-\begin{lstlisting}[language=Arduino]
+\subsection{Beginning the Game}
+To begin a game, the user will simultaneously select both the left and right buttons. The simultaneous button presses will allow the system to exit the standby loop and enter the game execution loop. To indicate to the user that a game has begun, all ten LEDs will light up green for moment. This is also a visual cue to the user that the first pattern is about to be displayed. At this moment, the system will internally randomly generate and save the sequence of ten color quadrants that will be shown as the game progresses.
+\subsection{During the Game}
+For the first turn, the system will illuminate one quadrant, either red, green, blue, or yellow for a moment then return to a neutral state (no lit LEDs). Once the system has finished displaying the pattern and is in a neutral state, the user repeats the displayed pattern by pressing the capacitive touch sensor corresponding to the desired quadrant. Refer to Figure \ref{fig:CPE_Lit_LEDs} for a visual representation of the color quadrants. 
+
+\begin{figure}[!t]
+\centering
+\includegraphics[width=4.5in]{Lit_LEDS.jpg}
+\caption{Circuit Playground Express Color Quadrants \cite{Adafruitwebsite}}
+\label{fig:CPE_Lit_LEDs}
+\end{figure}
+
+When the user selects a quadrant, that quadrant's LEDs will light up for a moment indicating that the system has received the user's input. Each user input is collected by the system and verified to confirm that each input matches the displayed pattern. Once the user has successfully inputted the the first pattern, the system will advance to a sequence with two quadrants. The sequence will be displayed one and then the next with a small amount of time in between each illuminated quadrant. For example, if in the first turn the system displayed Red, then in the second turn, the system will display Red and then another color quadrant. The system once again returns to a neutral state to accept the user inputs of the pattern. This process continues, with each turn containing an additional pattern, until the user successfully matches all ten sequence steps, the user inputs an incorrect quadrant, or the user takes too long to answer.
+
+\subsection{Ending the Game}
+If the user successfully mates all ten sequence steps, the system will exit the game execution loop and enter the win condition section. This section directs the system to quickly pulse all ten LEDs in various colors while also playing the win condition tones through the speaker. After a few moments the system will exit the win condition section and return to the standby loop.
+
+In the case where the user inputs a incorrect quadrant, the system will flash all ten LEDs Red for a moment then flash the LEDs of the expected quadrant three times to indicate which quadrant the user should have selected. The system will then exit the game execution loop and return to the standby loop.
+
+During game execution, the system will track the time in between each user input. If the time between each input is larger than a predetermined threshold, the system will treat it similar to inputting an incorrect input. First the system will flash all ten LEDs Red for a moment then flash the LEDs of the expected quadrant three times. The system will exit the game execution loop and return to the standby loop.
+
+\subsection{Pseudo Code}
+
+ \begin{lstlisting}[language=Arduino]
 #include <Adafruit_CircuitPlayground.h>
 
 void setup() {
@@ -113,28 +121,111 @@ void setup() {
 }
 
 void loop() {
-  CircuitPlayground.clearPixels();
+    round_counter = 0;
+    int sequence[10];
+    int user_input[10];
+    timer = 0;
+    bad_input = False;
+    delay(500);
+    while(1==1) %Infinite loop designed to check for the beginning of the game
+      if (button 1 == true) && (button 2 == true) %This indicates the beginning of the game
+        round_counter = 0;
+        for (i=0; i < 10; ++i)
+            sequence[i] = random number between 1 and 4; %This generates the color quadrant pattern that will be shown
+        end
+        LEDs 1-10 illuminate Green;
+        delay(1000);
+        turn off LEDs;
+        
+        
+        while ((round_counter <= 10) && (bad_input == False))
+        
+            for (i = 0; i <= round_counter; ++i)
+                illuminate quadrant listed in sequence[i];
+                delay(1000);
+                turn off LEDs;
+            end
+            
+            while((no touch) && (time < time_limit)
+                time limit = 2500 * round_counter;
+                begin timer;
+                if capacitive touch quadrant 1 == true
+                    user_input[input_count] = 1;
+                    illuminate quadrant 1 LEDs with proper color;
+                    delay(500);
+                    turn off LEDs;
+                    input_count = input_count + 1;
+                elseif capacitive tough quadrant 2 == true
+                    user_input[input_count] = 2;
+                    illuminate quadrant 2 LEDs with proper color;
+                    delay(500);
+                    turn off LEDs;
+                    input_count = input_count + 1;
+                elseif capacitive touch quadrant 3 == true
+                    user_input[input_count] = 3;
+                    illuminate quadrant 3 LEDs with proper color;
+                    delay(500);
+                    turn off LEDs;
+                    input_count = input_count + 1;
+                elseif capacitive touch quadrant 4 == true
+                    user_input[input_count] = 4;
+                    illuminate quadrant 4 LEDs with proper color;
+                    delay(500);
+                    turn off LEDs;
+                    input_count = input_count + 1;
+                end
+            end
+            
+            stop timer;
+            
+            if user_input[round_count] == sequence[round_count] && timer < time_limit
+                round_counter == round_counter + 1;
+                timer = 0;
+            else
+                illuminate all 10 LEDs red;
+                delay(500);
+                turn off LEDs;
+                for (i = 0; i < 3; ++i)
+                    illuminate sequence[1] LEDs;
+                    delay(100);
+                    turn off LEDs;
+                    delay(100);
+                end
+                bad_input = True; %this breaks out of while loop and returns to standby loop
+            end
+            
+            if round_counter == 11
+                play win sounds;
+                illuminate all 10 LEDs red;
+                delay(100);
+                illuminate all 10 LEDs blue;
+                delay(100);
+                illuminate all 10 LEDs green;
+                delay(100);
+                illuminate all 10 LEDs yellow;
+                delay(100);
+                illuminate all 10 LEDs orange;
+                delay(100);
+                illuminate all 10 LEDs purple;
+                delay(100);
+                illuminate all 10 LEDs cyan;
+                delay(100);
+                illuminate all 10 LEDs tangerine;
+                delay(100);
+                illuminate all 10 LEDs sky blue;
+                delay(100);
+                illuminate all 10 LEDs green;
+                delay(100);
+            end
+        end
+      end
+    end
+  }  
 
-  delay(500);
-
-  CircuitPlayground.setPixelColor(0, 255,   0,   0);
-  CircuitPlayground.setPixelColor(1, 128, 128,   0);
-  CircuitPlayground.setPixelColor(2,   0, 255,   0);
-  CircuitPlayground.setPixelColor(3,   0, 128, 128);
-  CircuitPlayground.setPixelColor(4,   0,   0, 255);
-  
-  CircuitPlayground.setPixelColor(5, 0xFF0000);
-  CircuitPlayground.setPixelColor(6, 0x808000);
-  CircuitPlayground.setPixelColor(7, 0x00FF00);
-  CircuitPlayground.setPixelColor(8, 0x008080);
-  CircuitPlayground.setPixelColor(9, 0x0000FF);
- 
-  delay(5000);
-}
-\end{lstlisting}
+ \end{lstlisting}
 
 \section{CONCLUSION}
-Finally, wrap up your proposal.
+In conclusion, our project will create an interactive memory skill game which will utilize three features of the circuit playground express to combat quarantine boredom. These features are four added external input buttons, the two on-board buttons, the on-board lights, and a speaker. It will work by taking input from the user and comparing it to a random sequence and see if the user input is correct. It will move along the sequence until it is completed or the user enters and incorrect input. Then the program will terminate with a victory or defeat determination. Depending on this determination, the lights and speaker will be signalled accordingly.
 
 \newpage
 
